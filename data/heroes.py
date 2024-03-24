@@ -12,9 +12,9 @@ class Hero(SqlAlchemyBase):
     name = sqlalchemy.Column(sqlalchemy.String,
                              index=True, unique=True)
     race_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("races.id"))
+                                sqlalchemy.ForeignKey("races.id"), nullable=False)
     class_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                 sqlalchemy.ForeignKey("classes.id"))
+                                 sqlalchemy.ForeignKey("classes.id"), nullable=False)
 
     races = orm.relationship('Races')
     classes = orm.relationship('Classes')

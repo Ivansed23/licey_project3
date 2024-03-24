@@ -11,6 +11,8 @@ class Races(SqlAlchemyBase):
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, unique=True)
     description = sqlalchemy.Column(sqlalchemy.String)
-    hero_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("heroes.id"))
-    hero = orm.relationship('Hero')
+    class_id = sqlalchemy.Column(sqlalchemy.Integer,
+                                 sqlalchemy.ForeignKey("classes.id"), nullable=False)
+
+    hero = orm.relationship('Hero', back_populates='races')
+    classes = orm.relationship('Classes')
