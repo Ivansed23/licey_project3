@@ -11,8 +11,12 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 def main():
-    db_session.global_init("db/characters.db")
     app.run()
+
+
+@app.route("/")
+def main_page():
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
