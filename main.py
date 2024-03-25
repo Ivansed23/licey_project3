@@ -16,7 +16,7 @@ def main():
 
 @app.route("/")
 def main_page():
-    return render_template('index.html')
+    return render_template('main_page.html')
 
 
 if __name__ == '__main__':
