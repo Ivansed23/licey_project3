@@ -15,6 +15,9 @@ class Hero(SqlAlchemyBase):
                                 sqlalchemy.ForeignKey("races.id"), nullable=False)
     class_id = sqlalchemy.Column(sqlalchemy.Integer,
                                  sqlalchemy.ForeignKey("classes.id"), nullable=False)
+    user_id = sqlalchemy.Column(sqlalchemy.Integer,
+                                sqlalchemy.ForeignKey("users.id"), nullable=False)
 
     races = orm.relationship('Races')
     classes = orm.relationship('Classes')
+    user = orm.relationship('User')

@@ -8,31 +8,45 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
     crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
+    <link rel="icon" href="static/img/favicon.ico">
     <title>{{ title }}</title>
 </head>
     <body>
+        <nav class="account">
+            {% if current_user.is_authenticated %}
+                <p>
+                    {{ current_user.name }}
+                    <a class="navbar-brand" href="/logout">Выйти</a>
+                </p>
+            {% else %}
+                <p>
+                    <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                    <a class="btn btn-success" href="/login">Войти</a>
+                </p>
+            {% endif %}
+        </nav>
         <div class="header">
             <h1>Библиотека классов и рас</h1>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg border rounded">
+                <div class="col-lg">
                     <img class="center-image" src="{{ url_for('static', filename='img/маг.jpg') }}" width="212" height="300">
-                    <h2 class="center-text">Классы</h2>
+                    <a class="link" href="http://127.0.0.1:5000/classes"><h2 class="center-text">Классы</h2></a>
                 </div>
-                <div class="col-lg border rounded">
+                <div class="col-lg">
                     <img class="center-image" src="{{ url_for('static', filename='img/гоблин.jpg') }}" width="212" height="300">
-                    <h2 class="center-text">Расы</h2>
+                    <a class="link" href="http://127.0.0.1:5000/races"><h2 class="center-text">Расы</h2></a>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg border rounded">
+                <div class="col-lg">
                     <img class="center-image" src="{{ url_for('static', filename='img/свиток2.png') }}" width="234" height="300">
-                    <h2 class="center-text">Правила</h2>
+                    <a class="link" href="http://127.0.0.1:5000/rules"><h2 class="center-text">Правила</h2></a>
                 </div>
-                <div class="col-lg border rounded">
+                <div class="col-lg">
                     <img class="center-image" src="{{ url_for('static', filename='img/герой 2.png') }}" width="353" height="300">
-                    <h2 class="center-text">Мои герои</h2>
+                    <a class="link" href="http://127.0.0.1:5000/my_heroes"><h2 class="center-text">Мои герои</h2></a>
                 </div>
             </div>
         </div>

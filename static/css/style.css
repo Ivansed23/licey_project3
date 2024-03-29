@@ -1,5 +1,6 @@
 .header {
     text-align: center;
+    margin-top: 10px;
 }
 .center-image {
     display: block;
@@ -11,4 +12,21 @@
 }
 .container {
     margin-top: 100px;
+    border-collapse: separate;
+    border-spacing: 50px 0;
+}
+.row {
+  padding: 30px 0;
+}
+.link {
+    color: black;
+    text-decoration: none;
+}
+.link:hover {
+    color:#A5260A;
+}
+.account {
+    text-align: right;
+    margin-right: 10px;
+    margin-top: 10px;
 }
