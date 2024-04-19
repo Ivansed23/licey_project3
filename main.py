@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, abort
 from flask import render_template
 from data import db_session
 from data.heroes import Hero
@@ -7,9 +7,9 @@ from data.classes import Classes
 from data.users import User
 from flask import request, make_response, session
 import datetime
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from forms.user import RegisterForm, LoginForm
-
+from forms.heroes import HeroesForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -27,7 +27,7 @@ def main():
 
 @app.route("/")
 def main_page():
-    return render_template('main_page.html')
+    return render_template('main_page.html', title='Главная страница')
 
 
 @app.route("/classes")
@@ -47,7 +47,13 @@ def rules_page():
 
 @app.route("/my_heroes")
 def my_heroes_page():
-    return render_template('heroes_page.html')
+    db_sess = db_session.create_session()
+    if current_user.is_authenticated:
+        heroes = db_sess.query(Hero).filter(Hero.user == current_user)
+        return render_template("heroes_page.html", heroes=heroes)
+    else:
+        heroes = None
+        return render_template("heroes_page.html", heroes=heroes)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -102,6 +108,75 @@ def logout():
     logout_user()
     return redirect("/")
 
+
+@app.route('/add_hero',  methods=['GET', 'POST'])
+@login_required
+def add_news():
+    form = HeroesForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        clas = db_sess.query(Classes).filter(Classes.name == form.clas.data).first()
+        race = db_sess.query(Races).filter(Races.name == form.race.data).first()
+        hero = Hero(name=form.name.data, class_id=clas.id, race_id=race.id)
+        current_user.heroes.append(hero)
+        db_sess.merge(current_user)
+        db_sess.commit()
+        return redirect('/my_heroes')
+    return render_template('heroes_form.html', title='Добавление персонажа',
+                           form=form)
+
+
+@app.route('/edit_hero/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_news(id):
+    form = HeroesForm()
+    if request.method == "GET":
+        db_sess = db_session.create_session()
+        hero = db_sess.query(Hero).filter(Hero.id == id,
+                                            Hero.user == current_user
+                                            ).first()
+        clas = db_sess.query(Classes).filter(Classes.id == hero.class_id).first()
+        race = db_sess.query(Races).filter(Races.id == hero.race_id).first()
+        if hero:
+            form.name.data = hero.name
+            form.clas.data = clas
+            form.race.data = race
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        hero = db_sess.query(Hero).filter(Hero.id == id,
+                                            Hero.user == current_user
+                                            ).first()
+        clas = db_sess.query(Classes).filter(Classes.name == form.clas.data).first()
+        race = db_sess.query(Races).filter(Races.name == form.race.data).first()
+        if hero:
+            hero.name = form.name.data
+            hero.class_id = clas.id
+            hero.race_id = race.id
+            db_sess.commit()
+            return redirect('/my_heroes')
+        else:
+            abort(404)
+    return render_template('heroes_form.html',
+                           title='Редактирование героя',
+                           form=form
+                           )
+
+
+@app.route('/delete_hero/<int:id>', methods=['GET', 'POST'])
+@login_required
+def news_delete(id):
+    db_sess = db_session.create_session()
+    hero = db_sess.query(Hero).filter(Hero.id == id,
+                                      Hero.user == current_user
+                                      ).first()
+    if hero:
+        db_sess.delete(hero)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/my_heroes')
 
 
 if __name__ == '__main__':

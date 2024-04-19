@@ -10,7 +10,7 @@
 .center-text {
     text-align: center;
 }
-.container {
+.contain {
     margin-top: 100px;
     border-collapse: separate;
     border-spacing: 50px 0;
@@ -29,4 +29,3 @@
     text-align: right;
     margin-right: 10px;
     margin-top: 10px;
-}
