@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ race.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #4e211f;
+            color: #1e120a;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2, h1 {
+            color: #e2b82f;
+        }
+        h1 {
+            font-size: 56px;
+        }
+        h2 {
+            font-size: 36px;
+        }
+        h3 {
+            color: #1e120a;
+        }
+        p {
+            line-height: 1.6;
+            font-weight: 750;
+            font-size: 20px;
+            color: #1e120a;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px; 
+            background-color: #6f362d;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .positive {
+            background-color: #c1e7c1;
+            color: #006400;
+        }
+        .negative {
+            background-color: #f7cccc;
+            color: #8b0000;
+        }
+        progress {
+            width: 100%;
+            height: 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #e2b82f; /* Жёлто-коричневый */
+        }
+
+        progress::-moz-progress-bar {
+            background-color: #e2b82f; /* Жёлто-коричневый */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ race.name }}</h1>
+        <div class="section">
+            <h2>Описание</h2>
+            <p>{{ race.description }}</p>
+        </div>
+        <div class="section">
+            <h2>Плюсы и минусы</h2>
+            <div style="display: flex;">
+                <div style="flex: 1; background-color: #7ecc7e; padding: 10px; border-radius: 5px; color: #1e120a;">
+                    <h3>Сильные стороны:</h3>
+                    <p>{{ race.strong_points }}</p>
+                </div>
+                <div style="flex: 1; background-color: #e07f7f; padding: 10px; border-radius: 5px; color: #1e120a;">
+                    <h3>Слабые стороны:</h3>
+                    <p>{{ race.weak_points }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Характеристики</h2>
+            <div>
+                <p>Сила: {{ race.strength }}/4</p>
+                <progress value="{{ race.strength }}" max="4"></progress>
+            </div>
+            <div>
+                <p>Телосложение: {{ race.constitution }}/4</p>
+                <progress value="{{ race.constitution }}" max="4"></progress>
+            </div>
+            <div>
+                <p>Ловкость: {{ race.dexterity }}/4</p>
+                <progress value="{{ race.dexterity }}" max="4"></progress>
+            </div>
+            <div>
+                <p>Интеллект: {{ race.intelligence }}/4</p>
+                <progress value="{{ race.intelligence }}" max="4"></progress>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

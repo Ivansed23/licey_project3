@@ -8,11 +8,78 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
     crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Светло-серый */
+        }
+        .header {
+            background-color: #343a40; /* Тёмно-серый */
+            color: #ffffff; /* Белый */
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #343a40; /* Тёмно-серый */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ced4da; /* Серый */
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #007bff; /* Синий */
+            color: #ffffff; /* Белый */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #343a40; /* Тёмно-серый */
+            font-weight: bold;
+        }
+        a:hover {
+            color: #007bff; /* Синий */
+        }
+    </style>
 </head>
-    <body>
-        <div class="header">
-            <h1>Расы</h1>
-        </div>
-    </body>
+<body>
+    <div class="header">
+        <h1>Расы</h1>
+    </div>
+    <h1>Список рас</h1>
+    <form action="/races" method="get">
+        <input type="text" name="query" value="{{ query }}" placeholder="Поиск...">
+        <button type="submit">Поиск</button>
+    </form>
+    <ul>
+        {% for race in races %}
+            <li><a style="font-size: 20px" href="/race/{{ race.id }}">{{ race.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
 </html>

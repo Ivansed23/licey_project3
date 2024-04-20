@@ -35,9 +35,31 @@ def classes_page():
     return render_template('classes_page.html')
 
 
+def search_race(query):
+    db_sess = db_session.create_session()
+    races = db_sess.query(Races).filter(Races.name.ilike(f'%{query}%') |
+                                        Races.description.ilike(f'%{query}%')).all()
+    return races
+
+
 @app.route("/races")
 def races_page():
-    return render_template('races_page.html')
+    query = request.args.get('query', '').strip()
+    if query:
+        races = search_race(query)
+    else:
+        db_sess = db_session.create_session()
+        races = db_sess.query(Races).all()
+    return render_template('races_page.html', races=races, query=query)
+
+
+@app.route("/race/<int:race_id>")
+def race_details(race_id):
+    db_sess = db_session.create_session()
+    race = db_sess.query(Races).get(race_id)
+    if not race:
+        return render_template('error.html', message="Раса не найдена"), 404
+    return render_template('race_details.html', race=race)
 
 
 @app.route("/rules")

@@ -13,6 +13,12 @@ class Races(SqlAlchemyBase):
     description = sqlalchemy.Column(sqlalchemy.String)
     class_id = sqlalchemy.Column(sqlalchemy.Integer,
                                  sqlalchemy.ForeignKey("classes.id"), nullable=False)
+    strong_points = sqlalchemy.Column(sqlalchemy.String)
+    weak_points = sqlalchemy.Column(sqlalchemy.String)
+    strength = sqlalchemy.Column(sqlalchemy.Integer)
+    constitution = sqlalchemy.Column(sqlalchemy.Integer) 
+    dexterity = sqlalchemy.Column(sqlalchemy.Integer) 
+    intelligence = sqlalchemy.Column(sqlalchemy.Integer)  
 
     hero = orm.relationship('Hero', back_populates='races')
     classes = orm.relationship('Classes')
