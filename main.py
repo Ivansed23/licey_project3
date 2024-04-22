@@ -133,15 +133,16 @@ def logout():
 
 @app.route('/add_hero',  methods=['GET', 'POST'])
 @login_required
-def add_news():
+def add_hero():
     form = HeroesForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         clas = db_sess.query(Classes).filter(Classes.name == form.clas.data).first()
         race = db_sess.query(Races).filter(Races.name == form.race.data).first()
         hero = Hero(name=form.name.data, class_id=clas.id, race_id=race.id)
-        current_user.heroes.append(hero)
-        db_sess.merge(current_user)
+        cur_user = db_sess.query(User).filter(User.id == current_user.id).first()
+        cur_user.heroes.append(hero)
+        db_sess.merge(cur_user)
         db_sess.commit()
         return redirect('/my_heroes')
     return render_template('heroes_form.html', title='Добавление персонажа',
@@ -150,7 +151,7 @@ def add_news():
 
 @app.route('/edit_hero/<int:id>', methods=['GET', 'POST'])
 @login_required
-def edit_news(id):
+def edit_hero(id):
     form = HeroesForm()
     if request.method == "GET":
         db_sess = db_session.create_session()
@@ -188,7 +189,7 @@ def edit_news(id):
 
 @app.route('/delete_hero/<int:id>', methods=['GET', 'POST'])
 @login_required
-def news_delete(id):
+def hero_delete(id):
     db_sess = db_session.create_session()
     hero = db_sess.query(Hero).filter(Hero.id == id,
                                       Hero.user == current_user
