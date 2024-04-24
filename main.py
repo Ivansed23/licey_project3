@@ -152,7 +152,7 @@ def add_hero():
         db_sess.commit()
         return redirect('/my_heroes')
     return render_template('heroes_form.html', title='Добавление персонажа',
-                           form=form)
+                           form=form, heroes_form_header='Введите данные героя, которого хотите создать.')
 
 
 @app.route('/edit_hero/<int:id>', methods=['GET', 'POST'])
@@ -192,7 +192,8 @@ def edit_hero(id):
             abort(404)
     return render_template('heroes_form.html',
                            title='Редактирование героя',
-                           form=form
+                           form=form,
+                           heroes_form_header='Измените данные героя.'
                            )
 
 
