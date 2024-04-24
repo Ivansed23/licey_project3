@@ -14,9 +14,22 @@
     <link rel="icon" href="static/img/favicon.ico">
     <title>{{ title }}</title>
     <style>
-        .rules_header {
-            text-align: center;
+        .rules_line {
+            color: #DAC764;
+            padding-bottom: 10px;
+        }
+        body {
+            background-color: #39510A;
+        }
+        .rules_text {
+            margin-top: 45px;
+            margin-left: 400px;
+            margin-right: 400px;
+        }
+        .rules_head {
             margin-top: 65px;
+            color: #DAC764;
+            text-align: center;
         }
     </style>
 </head>
@@ -48,6 +61,11 @@
                 {% endif %}
             </div>
         </header>
-        <h1 class="rules_header">Правила</h1>
+        <h1 class="rules_head">Правила игры в D&D</h1>
+        <div class="rules_text">
+            {% for line in rules_text %}
+                <h1 class="rules_line">{{ line }}</h1>
+            {% endfor %}
+        </div>
     </body>
 </html>

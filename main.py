@@ -64,7 +64,9 @@ def race_details(race_id):
 
 @app.route("/rules")
 def rules_page():
-    return render_template('rules_page.html', title='Правила')
+    with open('static/texts/rules.txt', mode='r', encoding='utf-8') as file:
+        rules_text = file.readlines()
+    return render_template('rules_page.html', title='Правила', rules_text=rules_text)
 
 
 @app.route("/my_heroes")
