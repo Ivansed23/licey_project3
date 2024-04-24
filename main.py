@@ -64,7 +64,7 @@ def race_details(race_id):
 
 @app.route("/rules")
 def rules_page():
-    return render_template('rules_page.html')
+    return render_template('rules_page.html', title='Правила')
 
 
 @app.route("/my_heroes")
@@ -137,6 +137,10 @@ def add_hero():
     form = HeroesForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
+        if db_sess.query(Hero).filter(Hero.name == form.name.data).first():
+            return render_template('heroes_form.html', title='Добавление персонажа',
+                                   form=form, message="Герой с таким именем уже существует")
+        db_sess = db_session.create_session()
         clas = db_sess.query(Classes).filter(Classes.name == form.clas.data).first()
         race = db_sess.query(Races).filter(Races.name == form.race.data).first()
         hero = Hero(name=form.name.data, class_id=clas.id, race_id=race.id)
@@ -173,6 +177,9 @@ def edit_hero(id):
                                             ).first()
         clas = db_sess.query(Classes).filter(Classes.name == form.clas.data).first()
         race = db_sess.query(Races).filter(Races.name == form.race.data).first()
+        if db_sess.query(Hero).filter(Hero.name == form.name.data).first():
+            return render_template('heroes_form.html', title='Добавление персонажа',
+                                   form=form, message="Герой с таким именем уже существует")
         if hero:
             hero.name = form.name.data
             hero.class_id = clas.id
@@ -189,7 +196,7 @@ def edit_hero(id):
 
 @app.route('/delete_hero/<int:id>', methods=['GET', 'POST'])
 @login_required
-def hero_delete(id):
+def delete_hero(id):
     db_sess = db_session.create_session()
     hero = db_sess.query(Hero).filter(Hero.id == id,
                                       Hero.user == current_user

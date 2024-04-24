@@ -9,6 +9,20 @@
     crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
     <title>{{ title }}</title>
+    <style>
+        form {
+            margin-left: 680px;
+            margin-right: 680px;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .message {
+            color: red;
+        }
+    </style>
 </head>
     <body>
         <h1>Регистрация</h1>
@@ -50,17 +64,8 @@
                     </p>
                 {% endfor %}
             </p>
-            <p>
-                {{ form.about.label }}<br>
-                {{ form.about(class="form-control") }}<br>
-                {% for error in form.about.errors %}
-                    <p class="alert alert-danger" role="alert">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            </p>
             <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-            {{message}}
+            <p class="message">{{message}}</p>
         </form>
     </body>
 </html>

@@ -24,35 +24,30 @@
         .page_header {
             color: #c59c65;
             text-align: center;
+            margin-top: 65px;
         }
         .line-display {
-            padding-left: 680px;
-            padding-right: 680px;
+            margin-left: 680px;
+            margin-right: 680px;
         }
     </style>
 </head>
     <body>
-        <nav class="account">
-            {% if current_user.is_authenticated %}
-                <p>
-                    <i class="bi bi-person-circle"></i>
-                    {{ current_user.name }}
-                    <a class="navbar-brand" href="/logout">Выйти</a>
-                </p>
-            {% else %}
-                <p>
-                    <a type="button" class="btn btn-primary has-icon" href="/register">
-                        <i class="bi bi-keyboard"></i>
-                        <span>Зарегистрироваться</span>
-                    </a>
-                    <a type="button" class="btn btn-success has-icon" href="/login">
-                        <i class="bi bi-box-arrow-in-left"></i>
-                        <span>Войти</span>
-                    </a>
-                </p>
-            {% endif %}
-        </nav>
         {% if current_user.is_authenticated %}
+            <header>
+                <div class="account">
+                    <a href="/" class="header_link">Главная</a>
+                    <a href="/classes" class="header_link">Классы</a>
+                    <a href="/races" class="header_link">Расы</a>
+                    <a href="/rules" class="header_link">Правила</a>
+                    <a href="/my_heroes" class="header_link">Мои герои</a>
+                    <p style="color: white" class="account_buttons">
+                        <i class="bi bi-person-circle" style="color: white"></i>
+                        {{ current_user.name }}
+                        <a class="navbar-brand" href="/logout">Выйти</a>
+                    </p>
+                </div>
+            </header>
             <h1 class="page_header">Ваши герои</h1>
             <div class="line-display">
                 <a type="button" href="/add_hero" class="btn btn-success has-icon">
@@ -75,9 +70,7 @@
             {% endfor %}
             </div>
         {% else %}
-            <div class="header">
-                <h1>Зарегитсрируйтесь или войдите, чтобы создать своего героя или увидеть  существующих</h1>
-            </div>
+            <h1 class="page_header">Зарегитсрируйтесь или войдите, чтобы создать своего героя или увидеть  существующих.</h1>
         {% endif %}
     </body>
 </html>

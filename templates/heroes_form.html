@@ -13,9 +13,31 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
     <link rel="icon" href="static/img/favicon.ico">
     <title>{{ title }}</title>
+    <style>
+        body {
+            background-color: #453e34;
+        }
+        p {
+            color: #c59c65;
+        }
+        .form {
+            margin-left: 680px;
+            margin-right: 680px;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #c59c65;
+            margin-top: 20px;
+        }
+        .message {
+            color: red;
+        }
+    </style>
 </head>
     <body>
-        <form action="" method="post">
+        <h1>Введите данные гороя, которого хотите создать</h1>
+        <form action="" method="post" class="form">
             {{ form.hidden_tag() }}
             <p>
                 {{ form.name.label }}<br>
@@ -45,7 +67,7 @@
                 {% endfor %}
             </p>
             <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-            {{message}}
+            <p class="message">{{message}}</p>
         </form>
     </body>
 </html>

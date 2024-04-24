@@ -15,16 +15,14 @@
     <title>{{ title }}</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f9fa; /* Светло-серый */
         }
-        .header {
-            background-color: #343a40; /* Тёмно-серый */
-            color: #ffffff; /* Белый */
-            padding: 20px;
+        .header_race {
             text-align: center;
+            margin-top: 65px;
+            color: black;
         }
         h1 {
             color: #343a40; /* Тёмно-серый */
@@ -60,21 +58,51 @@
         li {
             margin-bottom: 10px;
         }
-        a {
+        .race_link {
             text-decoration: none;
             color: #343a40; /* Тёмно-серый */
             font-weight: bold;
         }
-        a:hover {
+        .race_link:hover {
             color: #007bff; /* Синий */
+        }
+        h2 {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="header">
+    <header>
+        <div class="account">
+            <a href="/" class="header_link">Главная</a>
+            <a href="/classes" class="header_link">Классы</a>
+            <a href="/races" class="header_link">Расы</a>
+            <a href="/rules" class="header_link">Правила</a>
+            <a href="/my_heroes" class="header_link">Мои герои</a>
+            {% if current_user.is_authenticated %}
+                <p style="color: white" class="account_buttons">
+                    <i class="bi bi-person-circle" style="color: white"></i>
+                    {{ current_user.name }}
+                    <a class="navbar-brand" href="/logout">Выйти</a>
+                </p>
+            {% else %}
+                <p class="account_buttons">
+                    <a type="button" class="btn btn-outline-primary has-icon" href="/register">
+                        <i class="bi bi-keyboard"></i>
+                        <span>Зарегистрироваться</span>
+                    </a>
+                    <a type="button" class="btn btn-outline-success has-icon" href="/login">
+                        <i class="bi bi-box-arrow-in-left"></i>
+                        <span>Войти</span>
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </header>
+    <div class="header_race">
         <h1>Расы</h1>
     </div>
-    <h1>Список рас</h1>
+    <h2>Список рас</h2>
     <form action="/races" method="get">
         <input type="text" name="query" value="{{ query }}" placeholder="Поиск...">
         <button type="submit" class="btn btn-primary has-icon">
@@ -84,7 +112,7 @@
     </form>
     <ul>
         {% for race in races %}
-            <li><a style="font-size: 20px" href="/race/{{ race.id }}">{{ race.name }}</a></li>
+            <li><a class="race_link" style="font-size: 20px" href="/race/{{ race.id }}">{{ race.name }}</a></li>
         {% endfor %}
     </ul>
 </body>
