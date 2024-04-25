@@ -216,9 +216,6 @@ def edit_hero(id):
                                             ).first()
         clas = db_sess.query(Classes).filter(Classes.name == form.clas.data).first()
         race = db_sess.query(Races).filter(Races.name == form.race.data).first()
-        if db_sess.query(Hero).filter(Hero.name == form.name.data).first():
-            return render_template('heroes_form.html', title='Добавление персонажа',
-                                   form=form, message="Герой с таким именем уже существует")
         if hero:
             hero.name = form.name.data
             hero.class_id = clas.id

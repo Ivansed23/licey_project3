@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired
 
 class HeroesForm(FlaskForm):
     name = StringField('Имя', validators=[DataRequired()])
-    clas = SelectField('Класс', choices=['Воин', 'Маг', 'Лучник', 'Жрец', 'Плут'])
+    clas = SelectField('Класс', choices=['Волшебник', 'Лучник', 'Жрец', 'Воин', 'Плут', 'Бард', 'Паладин'])
     race = SelectField('Раса', choices=['Человек', 'Эльф', 'Дварф', 'Полурослик',
                                         'Гном', 'Полуэльф', 'Орк'])
     submit = SubmitField('Применить')
