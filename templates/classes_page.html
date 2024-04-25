@@ -11,43 +11,109 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
-    <link rel="icon" href="static/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <style>
-        .classes_header {
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Светло-серый */
+        }
+        .header_race {
             text-align: center;
             margin-top: 65px;
+            color: black;
+        }
+        h1 {
+            color: #343a40; /* Тёмно-серый */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ced4da; /* Серый */
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #007bff; /* Синий */
+            color: #ffffff; /* Белый */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .race_link {
+            text-decoration: none;
+            color: #343a40; /* Тёмно-серый */
+            font-weight: bold;
+        }
+        .race_link:hover {
+            color: #007bff; /* Синий */
+        }
+        h2 {
+            text-align: center;
         }
     </style>
 </head>
-    <body>
-        <header>
-            <div class="account">
-                <a href="/" class="header_link">Главная</a>
-                <a href="/classes" class="header_link">Классы</a>
-                <a href="/races" class="header_link">Расы</a>
-                <a href="/rules" class="header_link">Правила</a>
-                <a href="/my_heroes" class="header_link">Мои герои</a>
-                {% if current_user.is_authenticated %}
-                    <p style="color: white" class="account_buttons">
-                        <i class="bi bi-person-circle" style="color: white"></i>
-                        {{ current_user.name }}
-                        <a class="navbar-brand" href="/logout">Выйти</a>
-                    </p>
-                {% else %}
-                    <p class="account_buttons">
-                        <a type="button" class="btn btn-outline-primary has-icon" href="/register">
-                            <i class="bi bi-keyboard"></i>
-                            <span>Зарегистрироваться</span>
-                        </a>
-                        <a type="button" class="btn btn-outline-success has-icon" href="/login">
-                            <i class="bi bi-box-arrow-in-left"></i>
-                            <span>Войти</span>
-                        </a>
-                    </p>
-                {% endif %}
-            </div>
-        </header>
-        <h1 class="classes_header">Классы</h1>
-    </body>
+<body>
+    <header>
+        <div class="account">
+            <a href="/" class="header_link">Главная</a>
+            <a href="/classes" class="header_link">Классы</a>
+            <a href="/races" class="header_link">Расы</a>
+            <a href="/rules" class="header_link">Правила</a>
+            <a href="/my_heroes" class="header_link">Мои герои</a>
+            {% if current_user.is_authenticated %}
+                <p style="color: white" class="account_buttons">
+                    <i class="bi bi-person-circle" style="color: white"></i>
+                    {{ current_user.name }}
+                    <a class="navbar-brand" href="/logout">Выйти</a>
+                </p>
+            {% else %}
+                <p class="account_buttons">
+                    <a type="button" class="btn btn-outline-primary has-icon" href="/register">
+                        <i class="bi bi-keyboard"></i>
+                        <span>Зарегистрироваться</span>
+                    </a>
+                    <a type="button" class="btn btn-outline-success has-icon" href="/login">
+                        <i class="bi bi-box-arrow-in-left"></i>
+                        <span>Войти</span>
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </header>
+    <div class="header_race">
+        <h1>Классы</h1>
+    </div>
+    <h2>Список классов</h2>
+    <form action="/classes" method="get">
+        <input type="text" name="query" value="{{ query }}" placeholder="Поиск...">
+        <button type="submit" class="btn btn-primary has-icon">
+            <i class="bi bi-search"></i>
+            <span>Поиск</span>
+        </button>
+    </form>
+    <ul>
+        {% for class in classes %}
+            <li><a class="race_link" style="font-size: 20px" href="/classes/{{ class.id }}">{{ class.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
 </html>

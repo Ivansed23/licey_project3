@@ -30,15 +30,52 @@ def main_page():
     return render_template('main_page.html', title='Главная страница')
 
 
+def search_class(query):
+    query = query.lower()
+    db_sess = db_session.create_session()
+    classes = db_sess.query(Classes).filter(Classes.name.ilike(f'%{query}%') |
+                                          Classes.name.ilike(f'%{query.capitalize()}%') |
+                                          Classes.strong_points.ilike(f'%{query}%') |
+                                          Classes.strong_points.ilike(f'%{query.capitalize()}%') |
+                                          Classes.class_features.ilike(f'%{query}%') |
+                                          Classes.class_features.ilike(f'%{query.capitalize()}%') |
+                                          Classes.weapon_proficiencies.ilike(f'%{query}%') |
+                                          Classes.weapon_proficiencies.ilike(f'%{query.capitalize()}%') |
+                                          Classes.tool_proficiencies.ilike(f'%{query}%') |
+                                          Classes.tool_proficiencies.ilike(f'%{query.capitalize()}%') |
+                                          Classes.description.ilike(f'%{query}%') |
+                                          Classes.description.ilike(f'%{query.capitalize()}%')).all()
+    return classes
+
+
 @app.route("/classes")
 def classes_page():
-    return render_template('classes_page.html')
+    query = request.args.get('query', '').strip()
+    if query:
+        classes = search_class(query)
+    else:
+        db_sess = db_session.create_session()
+        classes = db_sess.query(Classes).all()
+    return render_template('classes_page.html', classes=classes, query=query)
+
+
+@app.route("/classes/<int:classes_id>")
+def classes_details(classes_id):
+    db_sess = db_session.create_session()
+    classes = db_sess.query(Classes).get(classes_id)
+    if not classes:
+        return render_template('error.html', message="Раса не найдена"), 404
+    return render_template('classes_details.html', classes=classes)
 
 
 def search_race(query):
     db_sess = db_session.create_session()
     races = db_sess.query(Races).filter(Races.name.ilike(f'%{query}%') |
-                                        Races.description.ilike(f'%{query}%')).all()
+                                        Races.name.ilike(f'%{query.capitalize()}%') |
+                                        Races.strong_points.ilike(f'%{query}%') |
+                                        Races.strong_points.ilike(f'%{query.capitalize()}%') |
+                                        Races.description.ilike(f'%{query}%') |
+                                        Races.description.ilike(f'%{query.capitalize()}%')).all()
     return races
 
 
