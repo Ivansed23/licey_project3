@@ -105,6 +105,22 @@ def rules_page():
         rules_text = file.readlines()
     return render_template('rules_page.html', title='Правила', rules_text=rules_text)
 
+@app.route("/bestiary")
+def bestiary_main():
+    with open('static/texts/beast.txt', mode='r', encoding='utf-8') as file:
+        rules_text = file.readlines()
+    text_beast = [i.split('@') for i in rules_text[0].split('%')]
+    return render_template('bestiary_view.html', text_beast=text_beast)
+
+@app.route("/bestiary/<int:b_id>")
+def bestiary_details(b_id):
+    print(b_id)
+    with open('static/texts/beast.txt', mode='r', encoding='utf-8') as file:
+        rules_text = file.readlines()
+    text_beast = [i.split('@') for i in rules_text[0].split('%')]
+    return render_template('beast.html', text_beast=text_beast, b_id=b_id)
+
+
 
 @app.route("/my_heroes")
 def my_heroes_page():

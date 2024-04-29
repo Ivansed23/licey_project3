@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
+    <link rel="icon" href="static/img/favicon.ico">
+    <title>{{ title }}</title>
+    <style>
+        .rules_line {
+            color: #DAC764;
+            padding-bottom: 10px;
+            font-size: 30px;
+            text-align: center
+        }
+        body {
+            background-color: #39510A;
+        }
+        .rules_text {
+            margin-top: 45px;
+            margin-left: 400px;
+            margin-right: 400px;
+        }
+        .rules_head {
+            margin-top: 65px;
+            color: #DAC764;
+            text-align: center;
+        }
+        .beast_icon {
+            color: wight;
+        }
+    </style>
+<body>
+    <header>
+        <div class="account">
+            <a href="/" class="header_link">Главная</a>
+            <a href="/classes" class="header_link">Классы</a>
+            <a href="/races" class="header_link">Расы</a>
+            <a href="/rules" class="header_link">Правила</a>
+            <a href="/my_heroes" class="header_link">Мои герои</a>
+            {% if current_user.is_authenticated %}
+            <p style="color: white" class="account_buttons">
+                <i class="bi bi-person-circle" style="color: white"></i>
+                {{ current_user.name }}
+                <a class="navbar-brand" href="/logout">Выйти</a>
+            </p>
+            {% else %}
+            <p class="account_buttons">
+                <a type="button" class="btn btn-outline-primary has-icon" href="/register">
+                    <i class="bi bi-keyboard"></i>
+                    <span>Зарегистрироваться</span>
+                </a>
+                <a type="button" class="btn btn-outline-success has-icon" href="/login">
+                    <i class="bi bi-box-arrow-in-left"></i>
+                    <span>Войти</span>
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </header>
+    <h1 class="rules_head">Бестиарий</h1>
+        <div class="rules_text">
+            {% for line in text_beast %}
+            <a href="/bestiary/{{ line[0][-1:] }}"><p class="rules_line">{{ line[0][:-1] }}</p></a>
+            {% endfor %}
+        </div>
+</body>
+</html>

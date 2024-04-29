@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
+    <link rel="icon" href="static/img/favicon.ico">
+    <title>{{ title }}</title>
+    <style>
+        .rules_line {
+            color: #DAC764;
+            padding-bottom: 10px;
+        }
+        body {
+            background-color: #39510A;
+        }
+        .bloky{
+            display: flex;
+            align-items: center;
+        }
+        .rules_text2 {
+            font-size: 20px;
+            text-align: center
+            display: inline-block;
+        }
+        .rules_text1 {
+            font-size: 50px;
+            text-align: center
+        }
+        .work{
+            flex: 1;
+        }
+
+        .rules_head {
+            margin-top: 65px;
+            color: #DAC764;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .content_best{
+
+        }
+        .img_gb{
+            display: inline-block;
+        }
+        .img_n{
+            wight: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="account">
+            <a href="/" class="header_link">Главная</a>
+            <a href="/classes" class="header_link">Классы</a>
+            <a href="/races" class="header_link">Расы</a>
+            <a href="/rules" class="header_link">Правила</a>
+            <a href="/my_heroes" class="header_link">Мои герои</a>
+            {% if current_user.is_authenticated %}
+            <p style="color: white" class="account_buttons">
+                <i class="bi bi-person-circle" style="color: white"></i>
+                {{ current_user.name }}
+                <a class="navbar-brand" href="/logout">Выйти</a>
+            </p>
+            {% else %}
+            <p class="account_buttons">
+                <a type="button" class="btn btn-outline-primary has-icon" href="/register">
+                    <i class="bi bi-keyboard"></i>
+                    <span>Зарегистрироваться</span>
+                </a>
+                <a type="button" class="btn btn-outline-success has-icon" href="/login">
+                    <i class="bi bi-box-arrow-in-left"></i>
+                    <span>Войти</span>
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </header>
+    <h1 class="rules_head">Бестиарий</h1>
+    <div class="row blocky">
+        <div class="col-12">
+            <h2 class="rules_text1">{{ text_beast[b_id][0][:-1] }}</h2>
+        </div>
+        <div class="col-1"><p></p></div>
+        <div class="col-6">
+            <p class="rules_text2">{{ text_beast[b_id][1] }}</p>
+        </div>
+        <div class="col-4">
+            <img class="col-5" src="/static/img/гоблин.jpg">
+        </div>
+        <div class="col-1"><p></p></div>
+
+    </div>
+
+</body>
+</html>
