@@ -105,11 +105,23 @@ def rules_page():
         rules_text = file.readlines()
     return render_template('rules_page.html', title='Правила', rules_text=rules_text)
 
+
 @app.route("/bestiary")
 def bestiary_main():
     with open('static/texts/beast.txt', mode='r', encoding='utf-8') as file:
         rules_text = file.readlines()
     text_beast = [i.split('@') for i in rules_text[0].split('%')]
+    return render_template('bestiary_view.html', text_beast=text_beast)
+
+@app.route("/bestiary/sortd/<int:s_id>")
+def bestiary_sort(s_id):
+    with open('static/texts/beast.txt', mode='r', encoding='utf-8') as file:
+        rules_text = file.readlines()
+    text_beast = [i.split('@') for i in rules_text[0].split('%')]
+    if s_id == 1:
+        text_beast = sorted(text_beast)
+    elif s_id == 2:
+        text_beast = sorted(text_beast, reverse=True)
     return render_template('bestiary_view.html', text_beast=text_beast)
 
 @app.route("/bestiary/<int:b_id>")
@@ -119,7 +131,6 @@ def bestiary_details(b_id):
         rules_text = file.readlines()
     text_beast = [i.split('@') for i in rules_text[0].split('%')]
     return render_template('beast.html', text_beast=text_beast, b_id=b_id)
-
 
 
 @app.route("/my_heroes")

@@ -12,6 +12,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}" />
     <link rel="icon" href="static/img/favicon.ico">
     <title>{{ title }}</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
         .rules_line {
             color: #DAC764;
@@ -34,6 +37,9 @@
         }
         .beast_icon {
             color: wight;
+        }
+        .centr{
+            text-align: center;
         }
     </style>
 <body>
@@ -65,10 +71,27 @@
         </div>
     </header>
     <h1 class="rules_head">Бестиарий</h1>
-        <div class="rules_text">
-            {% for line in text_beast %}
-            <a href="/bestiary/{{ line[0][-1:] }}"><p class="rules_line">{{ line[0][:-1] }}</p></a>
-            {% endfor %}
+    <div class="dropdown centr">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Кнопка выпадающего списка
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/bestiary/sortd/1">По алфавиту</a>
+          <a class="dropdown-item" href="/bestiary/sortd/2">Обратный алфавит</a>
         </div>
+    </div>
+    <div class="rules_text">
+        {% for line in text_beast %}
+            {% if line[0][-2] == '1' %}
+                <a href="/bestiary/{{ line[0][-2:] }}"><p class="rules_line">{{ line[0][:-2] }}</p></a>
+            {% elif line[0][-2] == '2' %}
+                <a href="/bestiary/{{ line[0][-2:] }}"><p class="rules_line">{{ line[0][:-2] }}</p></a>
+            {% elif line[0][-2] == '3' %}
+                <a href="/bestiary/{{ line[0][-2:] }}"><p class="rules_line">{{ line[0][:-2] }}</p></a>
+            {% else %}
+                <a href="/bestiary/{{ line[0][-1:] }}"><p class="rules_line">{{ line[0][:-1] }}</p></a>
+            {% endif %}
+        {% endfor %}
+    </div>
 </body>
 </html>
