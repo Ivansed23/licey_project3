@@ -26,9 +26,10 @@
             align-items: center;
         }
         .rules_text2 {
-            font-size: 20px;
+            font-size: 30px;
             text-align: center
             display: inline-block;
+            color: rgb(221,248,206);
         }
         .rules_text1 {
             font-size: 50px;
@@ -86,7 +87,16 @@
     <h1 class="rules_head">Бестиарий</h1>
     <div class="row blocky">
         <div class="col-12">
-            <h2 class="rules_text1">{{ text_beast[b_id][0][:-1] }}</h2>
+            {% if text_beast[b_id][0][-2] == '1' %}
+                <h2 class="rules_text1">{{ text_beast[b_id][0][:-2] }}</h2>
+            {% elif text_beast[b_id][0][-2] == '2' %}
+                <h2 class="rules_text1">{{ text_beast[b_id][0][:-2] }}</h2>
+            {% elif text_beast[b_id][0][-2] == '3' %}
+                <h2 class="rules_text1">{{ text_beast[b_id][0][:-2] }}</h2>
+            {% else %}
+                <h2 class="rules_text1">{{ text_beast[b_id][0][:-1] }}</h2>
+            {% endif %}
+
         </div>
         <div class="col-1"><p></p></div>
         <div class="col-6">

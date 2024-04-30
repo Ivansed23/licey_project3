@@ -122,6 +122,40 @@ def bestiary_sort(s_id):
         text_beast = sorted(text_beast)
     elif s_id == 2:
         text_beast = sorted(text_beast, reverse=True)
+    elif s_id == 3:
+        a = [len(text_beast[i][0]) - len(str(i)) for i in range(len(text_beast))]
+        b = []
+        for i in range(len(a)):
+            b.append([a[i], text_beast[i]])
+        b = sorted(b)
+        for i in range(len(text_beast)):
+            text_beast[i] = b[i][1]
+    elif s_id == 4:
+        a = [len(text_beast[i][1]) for i in range(len(text_beast))]
+        b = []
+        for i in range(len(a)):
+            b.append([a[i], text_beast[i]])
+        b = sorted(b)
+        for i in range(len(text_beast)):
+            text_beast[i] = b[i][1]
+    elif s_id == 5:
+        a = [len(text_beast[i][0]) - len(str(i)) for i in range(len(text_beast))]
+        b = []
+        for i in range(len(a)):
+            b.append([a[i], text_beast[i]])
+        b = sorted(b, reverse=True)
+        for i in range(len(text_beast)):
+            text_beast[i] = b[i][1]
+    elif s_id == 6:
+        a = [len(text_beast[i][1]) for i in range(len(text_beast))]
+        b = []
+        for i in range(len(a)):
+            b.append([a[i], text_beast[i]])
+        b = sorted(b, reverse=True)
+        for i in range(len(text_beast)):
+            text_beast[i] = b[i][1]
+
+
     return render_template('bestiary_view.html', text_beast=text_beast)
 
 @app.route("/bestiary/<int:b_id>")
